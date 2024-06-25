@@ -1,7 +1,7 @@
 import pygame, sys, renderer
 from enum import Enum
 
-from util import normalize_vector
+import util
 
 class PlayerDirection(Enum):
   North = 0
@@ -35,7 +35,9 @@ def HandelEvents():
 def Render(screen):
   screen.fill((255, 255, 255))
 
-  renderer.RenderPlayer(screen, player_state, player_position)
+  renderer.RenderPlayer(screen, player_position)
+  
+  print(util.GetLookDirection(player_position))
 
   pygame.display.update()
 
@@ -62,7 +64,7 @@ def HandleMovement(event):
       player_move_vec[0] -= 1
       player_state = PlayerDirection.West
       player_moving = True
-    player_move_vec = normalize_vector(player_move_vec)
+    player_move_vec = util.normalize_vector(player_move_vec)
     
   if event.type == pygame.KEYUP and not (keys[pygame.K_w] or keys[pygame.K_a] or keys[pygame.K_s] or keys[pygame.K_d]):
     player_moving = False
