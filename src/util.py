@@ -1,4 +1,11 @@
 import math, pygame
+from enum import Enum
+
+class PlayerDirection(Enum):
+  North = 0
+  South = 1
+  West = 2
+  East = 3
 
 def GetLookDirection(player_pos):
     mouse_pos = pygame.mouse.get_pos()
