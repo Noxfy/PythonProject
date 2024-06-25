@@ -11,5 +11,4 @@ def GetLookDirection(player_pos):
     #angle_to_mouse = math.atan((mouse_pos[0] - player_pos[0]) / (mouse_pos[1] - player_pos[1])) * (180/math.pi)
     angle_to_mouse = math.atan2(vec2[1], vec2[0]) - math.atan2(vec1[1], vec1[0])
 
-    print(angle_to_mouse)
     return angle_to_mouse
