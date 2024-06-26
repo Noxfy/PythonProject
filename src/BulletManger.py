@@ -1,6 +1,6 @@
 import pygame
 
-from tile_class import Tile
+from tile_class import Tile, TileTypes
 import util, variables, roomManager
 bullets = []
 
@@ -31,14 +31,14 @@ class Bullet:
       if self.damage <= 0:
         bullets.remove(self)
       if collision.health <= 0:
-        t = Tile(collision.tile_position, 2, collide=False)
+        t = Tile(collision.tile_position, TileTypes.BlueTile, collide=False)
         roomManager.current_room[int(collision.tile_position.x)][int(collision.tile_position.y)] = t
         
       
       
 
 def SpawnBullet(position, velocity):
-  bullets.append(Bullet(position, velocity, 4))
+  bullets.append(Bullet(position, velocity))
 
 
 def UpdateBullets():

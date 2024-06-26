@@ -4,6 +4,8 @@ from perlin_noise import PerlinNoise
 
 import variables, roomManager
 
+delta_time = 0
+
 class PlayerDirection(Enum):
   North = 0
   South = 1
@@ -45,3 +47,12 @@ def isCollidingWithTerrain(collider_rect):
             if tile != None and tile.has_collision and pygame.Rect.colliderect(pygame.rect.Rect(tile.tile_position.x * variables.terrain_scale, tile.tile_position.y * variables.terrain_scale, variables.terrain_scale, variables.terrain_scale), collider_rect):
                 return tile
     return None
+
+def UpdateDeltaTime(getTicksLastFrame):
+    global delta_time
+    t = pygame.time.get_ticks()
+    # deltaTime in seconds.
+    deltaTime = (t - getTicksLastFrame) / 1000.0
+    getTicksLastFrame = t
+    delta_time = deltaTime
+    return getTicksLastFrame

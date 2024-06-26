@@ -57,7 +57,7 @@ class Player:
             self.velocity = pygame.Vector2(0, 0)
 
         # Update player position
-
+        # TODO REMOVE PLAYER SIM POSTION
         sim_position = self.position + self.velocity * variables.scale
         if util.isCollidingWithTerrain(pygame.rect.Rect(sim_position.x, sim_position.y, player_sprite_size.x * variables.scale, player_sprite_size.y * variables.scale)) == None:
             self.position = sim_position
