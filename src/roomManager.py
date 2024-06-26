@@ -1,32 +1,27 @@
-import math, util, pygame, variables
+import util, pygame, tile_class
 
 current_room = []
-rects = []
-
     
 def generateRoom(width, height):
     global current_room
   
     perlin = util.getPerlinNoise(10)
 
-    rect_count = 0
-
     room = []
     for x in range(width):
         row = []
         for y in range(height):
             if perlin[x][y] > 0.5:
-                row.append(0)
-                temp = []
-                temp.append(pygame.rect.Rect(x * variables.terrain_scale, y * variables.terrain_scale, variables.terrain_scale, variables.terrain_scale))
-                temp.append(2)
-                temp.append(rect_count)
-                rect_count += 1
-                rects.append(temp)
+                row.append(tile_class.Tile(pygame.Vector2(x,y), tile_class.TileTypes.Brick, collide=True))
             elif perlin[x][y] > 0.3:
-                row.append(1)
+                row.append(tile_class.Tile(pygame.Vector2(x,y), tile_class.TileTypes.BlueTile))
             else:
-                row.append(2)
+                row.append(tile_class.Tile(pygame.Vector2(x,y), tile_class.TileTypes.YellowTile))
         room.append(row)
                 
     current_room = room
+
+def RenderGround(screen):
+  for x in range(len(current_room)):
+    for y in range(len(current_room[x])):
+      current_room[x][y].render(screen)

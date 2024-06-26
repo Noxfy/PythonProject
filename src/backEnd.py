@@ -1,4 +1,4 @@
-import pygame, sys, renderer
+import pygame, sys, roomManager
 
 import player_class, BulletManger, variables
 
@@ -18,7 +18,7 @@ def HandelEvents():
 def Render(screen):
   screen.fill((255, 255, 255))
 
-  renderer.RenderGround(screen)
+  roomManager.RenderGround(screen)
   player.Render(screen)
   BulletManger.RenderBullets(screen)
 

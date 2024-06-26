@@ -1,4 +1,4 @@
-import math, pygame
+import math, pygame, variables
 from enum import Enum
 from perlin_noise import PerlinNoise
 
@@ -39,7 +39,9 @@ def getPerlinNoise(oct):
   return pic
 
 def isCollidingWithTerrain(collider_rect):
-    for rect in roomManager.rects:
-        if pygame.Rect.colliderect(rect[0], collider_rect):
-            return rect
+    for x in range(len(roomManager.current_room)):
+        for y in range(len(roomManager.current_room[x])):
+            tile = roomManager.current_room[x][y]
+            if tile != None and tile.has_collision and pygame.Rect.colliderect(pygame.rect.Rect(tile.tile_position.x * variables.terrain_scale, tile.tile_position.y * variables.terrain_scale, variables.terrain_scale, variables.terrain_scale), collider_rect):
+                return tile
     return None

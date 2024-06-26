@@ -1,5 +1,6 @@
 import pygame
 
+from tile_class import Tile
 import util, variables, roomManager
 bullets = []
 
@@ -24,22 +25,20 @@ class Bullet:
     collision = util.isCollidingWithTerrain(pygame.rect.Rect(self.position.x, self.position.y, self.size * variables.scale, self.size * variables.scale))
 
     if collision != None:
-      tile_health = collision[1] - self.damage
-      self.damage -= collision[1]
+      hp = collision.health
+      collision.health -= self.damage
+      self.damage -= hp
       if self.damage <= 0:
         bullets.remove(self)
-      
-      if tile_health <= 0:
-        collision = collision[0]
-        roomManager.rects.remove(collision)
-        roomManager.current_room[int(collision.x / variables.terrain_scale)][int(collision.y / variables.terrain_scale)] = 2
-      else:
-        #asdasfasfkajsdflkajsldjals kjlk fix tile heal;th
+      if collision.health <= 0:
+        t = Tile(collision.tile_position, 2, collide=False)
+        roomManager.current_room[int(collision.tile_position.x)][int(collision.tile_position.y)] = t
+        
       
       
 
 def SpawnBullet(position, velocity):
-  bullets.append(Bullet(position, velocity))
+  bullets.append(Bullet(position, velocity, 4))
 
 
 def UpdateBullets():
