@@ -1,4 +1,4 @@
-import pygame, sys, roomManager
+import pygame, sys, roomManager, math
 
 import player_class, BulletManger, enemy_class
 
@@ -28,7 +28,8 @@ def Render(screen):
 def Update():
   player.Update()
   BulletManger.UpdateBullets()
-  if pygame.time.get_ticks() % 1000 == 0:
-    enemy_class.enemies.append(enemy_class.Enemy(pygame.Vector2(0, 0)))
-    print("spawned")
+  if (pygame.time.get_ticks() - 1000) % 100000 == 0:
+    difficulty = ((pygame.time.get_ticks()) % 1000000) / 10 + math.sin(pygame.time.get_ticks())
+    enemy_class.SpawnWave(difficulty)
+    print("wave: " + str(difficulty))
   enemy_class.UpdateEnemies(player)

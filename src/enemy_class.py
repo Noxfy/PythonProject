@@ -33,3 +33,15 @@ def RenderEnemies(screen):
 def UpdateEnemies(player):
   for enemy in enemies:
     enemy.Update(player)
+
+
+def SpawnWave(dificulty):
+  border = 20
+  for i in range(int(10 * dificulty)):
+    position = pygame.Vector2(random.randint(-border, variables.width + border), random.randint(-border, variables.height + border))
+
+    if position.x > variables.width and position.x < 0 and position.y > variables.height and position.y < 0:
+      enemies.append(Enemy(position))
+    else:
+      i += 1
+      print(i)
