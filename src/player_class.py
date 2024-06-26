@@ -3,14 +3,16 @@ import pygame, util, variables
 player_sprites = pygame.image.load("./assets/player_sprite.png")
 player_sprite_size = pygame.Vector2(13, 17)
 
+
 class Player:
 
     def __init__(self):
-        self.player_state = util.PlayerDirection.North
-        self.player_moving = False
-        self.player_position = pygame.Vector2(64, 64)
+        self.direction = util.PlayerDirection.North
+        self.is_moving = False
+        self.position = pygame.Vector2(variables.width / 2, variables.width / 2)
         self.velocity = pygame.Vector2(0,0)
         self.speed = 0.08
+        
 
     def Update(self):
         self.Move()
@@ -19,7 +21,7 @@ class Player:
     def Render(self, screen):
         direction = 0
 
-        angle = util.GetLookDirection(self.player_position)
+        angle = util.GetLookDirection(self.position)
         if (angle > -4 and angle < -2):
             direction = 0
         elif (angle < 0.5 and angle > -1):
@@ -29,8 +31,11 @@ class Player:
         else:
             direction = 2
 
-        screen.blit(pygame.transform.scale(player_sprites.subsurface(player_sprite_size.x * direction, 0, player_sprite_size.x, player_sprite_size.y), pygame.Vector2(variables.scale * player_sprite_size.x, variables.scale * player_sprite_size.y)), self.player_position - player_sprite_size * 0.5)
-        
+        screen.blit(pygame.transform.scale(player_sprites.subsurface(player_sprite_size.x * direction, 0, player_sprite_size.x, player_sprite_size.y), pygame.Vector2(variables.scale * player_sprite_size.x, variables.scale * player_sprite_size.y)), self.position - player_sprite_size * 0.5)
+
+        #collision render debug
+        #pygame.draw.rect(screen, (255, 0, 0), self.collider_rect, width=1)
+
     def Move(self):
         keys = pygame.key.get_pressed()
         player_move_vec = pygame.Vector2(0, 0)
@@ -52,4 +57,7 @@ class Player:
             self.velocity = pygame.Vector2(0, 0)
 
         # Update player position
-        self.player_position += self.velocity * variables.scale
+
+        sim_position = self.position + self.velocity * variables.scale
+        if util.isCollidingWithTerrain(pygame.rect.Rect(sim_position.x, sim_position.y, player_sprite_size.x * variables.scale, player_sprite_size.y * variables.scale)) == None:
+            self.position = sim_position

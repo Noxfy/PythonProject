@@ -12,8 +12,8 @@ def HandelEvents():
       sys.exit()
     
     if event.type == pygame.MOUSEBUTTONDOWN and event.button == 1:
-      look_vector = (pygame.mouse.get_pos() - player.player_position).normalize()
-      BulletManger.SpawnBullet(player.player_position + pygame.Vector2(0, 0), look_vector * 0.2)
+      look_vector = (pygame.mouse.get_pos() - player.position).normalize()
+      BulletManger.SpawnBullet(player.position + pygame.Vector2(0, 0), look_vector * 0.4)
   
 def Render(screen):
   screen.fill((255, 255, 255))
